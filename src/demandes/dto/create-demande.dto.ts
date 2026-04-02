@@ -1,12 +1,23 @@
 import { IsNotEmpty } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { CreateDateColumn } from 'typeorm';
 
 export class CreateDemandeDto {
-  id: number;
+  @ApiProperty()
+  @IsNotEmpty()
+  titre!: string;
 
+  @ApiProperty()
   @IsNotEmpty()
-  titre: string;
+  details!: string;
+
+  @ApiProperty()
   @IsNotEmpty()
-  details: string;
-  @IsNotEmpty()
-  status: string;
+  status!: string;
+
+  @ApiProperty()
+  @CreateDateColumn()
+  date_der_mod!: Date;
+
+  //date creation gerrer par db, supprimer par default false
 }

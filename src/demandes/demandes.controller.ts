@@ -10,7 +10,7 @@ import {
 import { DemandesService } from './demandes.service';
 import { CreateDemandeDto } from './dto/create-demande.dto';
 import { UpdateDemandeDto } from './dto/update-demande.dto';
-
+import { DemandesResponseDto } from './dto/demandesResponse.dto';
 @Controller('demandes')
 export class DemandesController {
   constructor(private readonly demandesService: DemandesService) {}
@@ -21,7 +21,7 @@ export class DemandesController {
   }
 
   @Get()
-  findAll() {
+  async findAll(): Promise<DemandesResponseDto[]> {
     return this.demandesService.findAll();
   }
 
