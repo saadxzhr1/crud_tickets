@@ -31,27 +31,28 @@ export class DemandesService {
     const demandes = await this.demandesRepository.find({
       where: { supprimer: false },
     });
-    return demandes.map((demandes) => ({
-      id: demandes.id,
-      titre: demandes.titre,
-      details: demandes.details,
-      status: demandes.status,
-      date_creation: demandes.date_creation,
-      date_der_mod: demandes.date_der_mod,
+    return demandes.map((demande) => ({
+      id: demande.id,
+      titre: demande.titre,
+      details: demande.details,
+      status: demande.status,
+      date_creation: demande.date_creation,
+      date_der_mod: demande.date_der_mod,
     }));
   }
 
   // Trouver ticket par id
-  async findOne(id: number): Promise<DemandesResponseDto[]> {
-    const demandes = await this.demandesRepository.find({
-      where: { supprimer: false, id: id },
-    });
-    return demandes.map((demandes) => ({
-      id: demandes.id,
-      titre: demandes.titre,
-      details: demandes.details,
-      status: demandes.status,
-    }));
+  async findOne(id: number): Promise<DemandesResponseDto> {
+    const demande = await this.demandesRepository.findOneBy({ id });
+    if (!demande) {
+      throw new NotFoundException(`Demande ${id} non trouvée`);
+    }
+    return {
+      id: demande.id,
+      titre: demande.titre,
+      details: demande.details,
+      status: demande.status,
+    };
   }
 
   // Modifier ticket
