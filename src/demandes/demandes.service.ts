@@ -1,22 +1,22 @@
 import { Injectable, NotFoundException, Query } from '@nestjs/common';
-import { CreateDemandeDto } from './dto/create-demande.dto';
-import { UpdateDemandeDto } from './dto/update-demande.dto';
+import { CreateDemandeDto } from './dto/createDemande.dto';
+import { UpdateDemandeDto } from './dto/updateDemande.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Demandes } from './entities/demande.entity';
 import { DemandesResponseDto } from './dto/demandesResponse.dto';
-import { DemandesStatus } from './entities/demandesStatus.enum';
+import { DemandesStatus } from './demandesStatus.enum';
 import { ApiQuery } from '@nestjs/swagger';
 @Injectable()
 export class DemandesService {
   private readonly demandes: Demandes[] = [];
+
   constructor(
     @InjectRepository(Demandes)
     private demandesRepository: Repository<Demandes>,
   ) {}
 
-  /////////////////////////////////////////////////
-
+  // Ajouter ticket
   async create(createDemandeDto: CreateDemandeDto) {
     const demande = this.demandesRepository.create({
       ...createDemandeDto,
@@ -26,8 +26,7 @@ export class DemandesService {
     return demande;
   }
 
-  /////////////////////////////////////////////////
-
+  // Charger tous les tickets
   async findAll(): Promise<DemandesResponseDto[]> {
     const demandes = await this.demandesRepository.find({
       where: { supprimer: false },
@@ -42,8 +41,7 @@ export class DemandesService {
     }));
   }
 
-  /////////////////////////////////////////////////
-
+  // Trouver ticket par id
   async findOne(id: number): Promise<DemandesResponseDto[]> {
     const demandes = await this.demandesRepository.find({
       where: { supprimer: false, id: id },
@@ -56,8 +54,7 @@ export class DemandesService {
     }));
   }
 
-  /////////////////////////////////////////////////
-
+  // Modifier ticket
   async update(
     id: number,
     updateDemandeDto: UpdateDemandeDto,
@@ -65,7 +62,7 @@ export class DemandesService {
     const demande = await this.demandesRepository.findOneBy({ id });
 
     if (!demande) {
-      throw new NotFoundException(`Demande ${id} not found`);
+      throw new NotFoundException(`Demande ${id} non trouvée`);
     }
 
     Object.assign(demande, updateDemandeDto);
@@ -73,8 +70,7 @@ export class DemandesService {
     return await this.demandesRepository.save(demande);
   }
 
-  /////////////////////////////////////////////////
-
+  // Supprimer ticket
   remove(id: number) {
     return `This action removes a #${id} demande`;
   }

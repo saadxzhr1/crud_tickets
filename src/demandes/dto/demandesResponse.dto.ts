@@ -1,13 +1,8 @@
 // 1. user-response.dto.ts
 import { Expose, Exclude } from 'class-transformer';
+import { CreateDemandeDto } from './createDemande.dto';
 
-@Exclude()
-export class DemandesResponseDto {
+export class DemandesResponseDto extends CreateDemandeDto {
   @Expose() id!: number;
-  @Expose() titre!: string;
-  @Expose() details!: string;
-  @Expose() status!: string;
   @Expose() date_creation?: Date;
-  @Expose() date_der_mod?: Date;
-  // password is not exposed
 }
