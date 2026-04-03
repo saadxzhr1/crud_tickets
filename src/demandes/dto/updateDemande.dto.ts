@@ -1,18 +1,11 @@
 // import { PartialType } from '@nestjs/mapped-types';
 // import { CreateDemandeDto } from './create-demande.dto';
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { UpdateDateColumn } from 'typeorm';
+import { CreateDemandeDto } from './createDemande.dto';
 
-export class UpdateDemandeDto {
+export class UpdateDemandeDto extends PartialType(CreateDemandeDto) {
   @ApiProperty()
-  @IsNotEmpty()
-  titre!: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  details!: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  status!: string;
+  @UpdateDateColumn()
+  date_der_mod?: Date;
 }

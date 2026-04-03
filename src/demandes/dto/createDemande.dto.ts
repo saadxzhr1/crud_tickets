@@ -1,9 +1,17 @@
 // import { IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateDateColumn } from 'typeorm';
-import { UpdateDemandeDto } from './updateDemande.dto';
 
-export class CreateDemandeDto extends UpdateDemandeDto {
+export class CreateDemandeDto {
+  @ApiProperty()
+  titre!: string;
+
+  @ApiProperty()
+  details!: string;
+
+  @ApiProperty()
+  status!: string;
+
   @ApiProperty()
   @CreateDateColumn()
   date_der_mod?: Date;
