@@ -10,5 +10,5 @@ import { DemandesComponent } from './pages/demandes-component/demandes-component
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('demandes_ui');
+  protected readonly title = signal('demandes_fontend');
 }

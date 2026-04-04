@@ -1,4 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Demandes {
@@ -21,6 +26,7 @@ export class Demandes {
   date_creation?: Date;
 
   @Column()
+  @UpdateDateColumn()
   date_der_mod?: Date;
 }
 

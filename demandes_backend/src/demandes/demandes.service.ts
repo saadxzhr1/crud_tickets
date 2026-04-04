@@ -71,13 +71,13 @@ export class DemandesService {
   }
 
   // Supprimer demande (soft delete)
-  async remove(id: number): Promise<string> {
+  async remove(id: number) {
     const demande = await this.demandesRepository.findOneBy({ id });
     if (!demande) {
       throw new NotFoundException(`Demande ${id} non trouvée`);
     }
     demande.supprimer = true;
     await this.demandesRepository.save(demande);
-    return `Demande ${demande.titre} supprimee avec success`;
+    return { message: 'Demande ' + demande.titre + ' supprimee avec success' };
   }
 }
