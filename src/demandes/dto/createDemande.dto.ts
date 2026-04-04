@@ -16,5 +16,5 @@ export class CreateDemandeDto {
   @CreateDateColumn()
   date_der_mod?: Date;
 
-  //date creation gerrer par db, supprimer par default false
+  //date creation gerrer par db, supprimer par default false par service
 }

@@ -13,6 +13,7 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');
 
+  // Configurer Swagger
   const config = new DocumentBuilder()
     .setTitle('Demandes example')
     .setDescription('The demandes API description')
@@ -22,6 +23,7 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
 
+  // Http server
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

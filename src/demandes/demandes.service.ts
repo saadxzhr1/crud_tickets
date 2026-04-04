@@ -1,36 +1,39 @@
-import { Injectable, NotFoundException, Query } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateDemandeDto } from './dto/createDemande.dto';
 import { UpdateDemandeDto } from './dto/updateDemande.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Demandes } from './entities/demande.entity';
 import { DemandesResponseDto } from './dto/demandesResponse.dto';
-import { DemandesStatus } from './demandesStatus.enum';
-import { ApiQuery } from '@nestjs/swagger';
+
 @Injectable()
 export class DemandesService {
-  private readonly demandes: Demandes[] = [];
+  // private readonly demandes: Demandes[] = [];
 
+  // Injecter le repository
   constructor(
     @InjectRepository(Demandes)
     private demandesRepository: Repository<Demandes>,
   ) {}
 
-  // Ajouter ticket
-  async create(createDemandeDto: CreateDemandeDto) {
+  // Ajouter demande
+  async create(createDemandeDto: CreateDemandeDto): Promise<string> {
     const demande = this.demandesRepository.create({
       ...createDemandeDto,
       supprimer: false,
     });
     await this.demandesRepository.save(demande);
-    return demande;
+    return `Demande ${demande.titre} Ajouter avec success`;
   }
 
-  // Charger tous les tickets
+  // Charger tous les demandes
   async findAll(): Promise<DemandesResponseDto[]> {
     const demandes = await this.demandesRepository.find({
       where: { supprimer: false },
     });
+    if (!demandes) {
+      throw new NotFoundException('Aucune demande trouvée');
+    }
     return demandes.map((demande) => ({
       id: demande.id,
       titre: demande.titre,
@@ -41,7 +44,7 @@ export class DemandesService {
     }));
   }
 
-  // Trouver ticket par id
+  // Trouver demande par id
   async findOne(id: number): Promise<DemandesResponseDto> {
     const demande = await this.demandesRepository.findOneBy({ id });
     if (!demande) {
@@ -55,32 +58,28 @@ export class DemandesService {
     };
   }
 
-  // Modifier ticket
+  // Modifier demande
   async update(
     id: number,
     updateDemandeDto: UpdateDemandeDto,
-  ): Promise<Demandes> {
+  ): Promise<string> {
     const demande = await this.demandesRepository.findOneBy({ id });
-
     if (!demande) {
       throw new NotFoundException(`Demande ${id} non trouvée`);
     }
-
     Object.assign(demande, updateDemandeDto);
-
-    return await this.demandesRepository.save(demande);
+    await this.demandesRepository.save(demande);
+    return `Demande ${demande.titre} modifiée avec success`;
   }
 
-  // Supprimer ticket
-  remove(id: number) {
-    return `This action removes a #${id} demande`;
+  // Supprimer demande (soft delete)
+  async remove(id: number): Promise<string> {
+    const demande = await this.demandesRepository.findOneBy({ id });
+    if (!demande) {
+      throw new NotFoundException(`Demande ${id} non trouvée`);
+    }
+    demande.supprimer = true;
+    await this.demandesRepository.save(demande);
+    return `Demande ${demande.titre} supprimee avec success`;
   }
-
-  /////////////////////////////////////////////////
-
-  //filter by status
-  @ApiQuery({ name: 'status', enum: DemandesStatus })
-  async filterByRole(
-    @Query('status') status: DemandesStatus = DemandesStatus.Brouillon,
-  ) {}
 }
