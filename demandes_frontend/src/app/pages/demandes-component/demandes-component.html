@@ -1,0 +1,27 @@
+
+    <h3>Demandes</h3>
+    <div style="display:flex;gap:8px;margin-bottom:8px;">
+      <!-- <label>Search: <input #q (input)="query.set(q.value)" placeholder="Type to filter..." /></label>
+      <button (click)="setSort('name')">Sort by Name</button>
+      <button (click)="setSort('price')">Sort by Price</button>
+      <button (click)="toggleDir()">{{ sortDir() === 1 ? 'Asc' : 'Desc' }}</button> -->
+    </div>
+
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr><th>ID</th><th>Titre</th><th>Details</th><th>Status</th><th>Date de Creation</th><th>Date Derniere Modification</th></tr>
+      </thead>
+      <tbody>
+        @for (demande of demandes; track demande.id) {
+          <tr>
+            <td style="border:1px solid #ddd;padding:8px;">{{ demande.id }}</td>
+            <td style="border:1px solid #ddd;padding:8px;">{{ demande.titre }}</td>
+            <td style="border:1px solid #ddd;padding:8px;">{{ demande.details}}</td>
+            <td style="border:1px solid #ddd;padding:8px;">{{ demande.status }}</td>
+            <td style="border:1px solid #ddd;padding:8px;">{{ demande.dateCreation | date:'dd/MM/yyyy HH:mm'}}</td>
+            <td style="border:1px solid #ddd;padding:8px;">{{ demande.dateDerniereModification | date:'dd/MM/yyyy HH:mm'}}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
