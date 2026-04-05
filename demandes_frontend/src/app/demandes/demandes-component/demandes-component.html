@@ -1,18 +1,19 @@
 
-    <h3>Demandes</h3>
+    <mat-form-field>
+      <mat-label>Filtrer par status</mat-label>
+      <mat-select [(ngModel)]="selectedStatus">
+        <mat-option value="">Toutes</mat-option>
+        @for (status of statusOptions; track status) {
+          <mat-option [value]="status">{{ status }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
-    <label for="statusFilter">Filtrer par status:</label>
-    <select id="statusFilter" [(ngModel)]="selectedStatus" name="statusFilter">
-      <option value="">Toutes</option>
-      @for (status of statusOptions; track status) {
-        <option [value]="status">{{ status }}</option>
-      }
-    </select>
-
+    
 
     <table>
       <thead>
-        <tr><th>ID</th><th>Titre</th><th>Details</th><th>Status</th><th>Date de Creation</th><th>Date Derniere Modification</th><th span="2">Action</th></tr>
+        <tr><th>ID</th><th>Titre</th><th>Details</th><th>Status</th><th>Date de Creation</th><th>Date Derniere Modification</th><th>Action</th></tr>
       </thead>
       <tbody>
         @for (demande of filteredDemandes; track demande.id) {
@@ -24,9 +25,21 @@
             <td>{{ demande.dateCreation | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>{{ demande.dateDerniereModification | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>
-              <button type="button" (click)="deleteDemande(demande.id)">Supprimer</button>
+              <button (click)="toggleHistorique(demande.id)">
+                {{ expandedId === demande.id ? '▲ Fermer' : '▼ Historique' }}
+              </button>
+            
+                <button type="button" (click)="deleteDemande(demande.id)">Supprimer</button>
             </td>
-          </tr>
+            </tr>
+
+          @if (expandedId === demande.id) {
+            <tr>
+              <td colspan="7">
+                <app-historique-component [demandeId]="demande.id" />
+              </td>
+            </tr>
+          }
         }
       </tbody>
     </table>

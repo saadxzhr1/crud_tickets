@@ -11,7 +11,7 @@ export class HistoriqueController {
   }
 
   @Get(':id_demande')
-  findOne(@Param('id_demande') id_demande: number) {
+  findDemandeId(@Param('id_demande') id_demande: number) {
     return this.historiqueService.findSome(+id_demande);
   }
 }

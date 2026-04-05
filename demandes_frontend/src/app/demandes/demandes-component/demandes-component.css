@@ -1,9 +1,11 @@
 
 table{
-    width:100%;border-collapse:collapse
+    width:100%;
+    border-collapse:collapse; 
+    background-color: rgba(175, 213, 225, 0.134);
 }
 th{
-    border:1px solid #ddd;padding:8px;background:#f7f7f7;
+    border:1px solid #ddd;padding:8px;background:#8fc8dc33;
 }
 td{
     border:1px solid #ddd;padding:8px;

@@ -28,6 +28,7 @@ export class DemandesService {
   async findAll(): Promise<DemandesResponseDto[]> {
     const demandes = await this.demandesRepository.find({
       where: { supprimer: false },
+      order: { date_creation: 'DESC' },
     });
     if (!demandes) {
       throw new NotFoundException('Aucune demande trouvée');

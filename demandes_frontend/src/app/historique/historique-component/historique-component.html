@@ -1,13 +1,11 @@
 
 
-    <h3>Historique</h3>
-
     <table>
       <thead>
         <tr><th>ID</th><th>Date</th><th>Type d'action</th><th>Id Demande</th><th>utilisateur</th><th>Ancienne valeur</th><th>Nouvelle valeur</th></tr>
       </thead>
       <tbody>
-        @for (historique of historiques; track historique.id) {
+        @for (historique of historiques$ | async; track historique.id) {
           <tr>
             <td>{{ historique.id }}</td>
             <td>{{ historique.date_creation | date:'dd/MM/yyyy HH:mm'}}</td>
@@ -20,4 +18,4 @@
         }
       </tbody>
     </table>
-
+    
