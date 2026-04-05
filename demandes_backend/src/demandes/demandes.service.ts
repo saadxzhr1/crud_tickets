@@ -15,13 +15,13 @@ export class DemandesService {
   ) {}
 
   // Ajouter demande
-  async create(createDemandeDto: CreateDemandeDto): Promise<string> {
+  async create(createDemandeDto: CreateDemandeDto) {
     const demande = this.demandesRepository.create({
       ...createDemandeDto,
       supprimer: false,
     });
     await this.demandesRepository.save(demande);
-    return `Demande ${demande.titre} Ajouter avec success`;
+    return { message: 'Demande ' + demande.titre + ' ajouter avec success' };
   }
 
   // Charger tous les demandes
@@ -58,17 +58,14 @@ export class DemandesService {
   }
 
   // Modifier demande
-  async update(
-    id: number,
-    updateDemandeDto: UpdateDemandeDto,
-  ): Promise<string> {
+  async update(id: number, updateDemandeDto: UpdateDemandeDto) {
     const demande = await this.demandesRepository.findOneBy({ id });
     if (!demande) {
       throw new NotFoundException(`Demande ${id} non trouvée`);
     }
     Object.assign(demande, updateDemandeDto);
     await this.demandesRepository.save(demande);
-    return `Demande ${demande.titre} modifiée avec success`;
+    return { message: 'Demande ' + demande.titre + ' modifier avec success' };
   }
 
   // Supprimer demande (soft delete)

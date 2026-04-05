@@ -12,7 +12,9 @@ export class HistoriqueService {
   ) {}
 
   async findAll(): Promise<HistoriqueResponseDto[]> {
-    const historiques = await this.historiqueRepository.find();
+    const historiques = await this.historiqueRepository.find({
+      order: { date_creation: 'DESC' },
+    });
     if (!historiques) {
       throw new NotFoundException('Aucune historique trouvée');
     }
@@ -30,6 +32,7 @@ export class HistoriqueService {
   async findSome(id_d: number): Promise<HistoriqueResponseDto[]> {
     const historiques = await this.historiqueRepository.find({
       where: { id_demande: id_d },
+      order: { date_creation: 'DESC' },
     });
     if (!historiques) {
       throw new NotFoundException('Aucun historique trouvée');

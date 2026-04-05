@@ -1,4 +1,5 @@
 
+    <div id="filter-add">
     <mat-form-field>
       <mat-label>Filtrer par status</mat-label>
       <mat-select [(ngModel)]="selectedStatus">
@@ -10,6 +11,29 @@
     </mat-form-field>
 
     
+
+    <!-- Ouvrire pop up (creer / modifier un autrre button) -->
+    <button (click)="openCreate()" matButton="tonal" id="add-btn">Ajouter demande</button>
+    </div>
+
+    <!-- Form (shown/hide) -->
+    @if (showForm) {
+      <div class="form-container">
+        <div class="form-inputs">
+          <input [(ngModel)]="form.titre" name="titre" placeholder="Titre" />
+          <input [(ngModel)]="form.details" name="details" placeholder="Détails" />
+          <select [(ngModel)]="form.status" name="status">
+            @for (s of statusOptions; track s) {
+              <option [value]="s">{{ s }}</option>
+            }
+          </select>
+        </div>
+        <div class="form-actions">
+          <button (click)="submit()">{{ editingId ? 'Modifier' : 'Créer' }}</button>
+          <button (click)="cancel()">Annuler</button>
+        </div>
+      </div>
+    }
 
     <table>
       <thead>
@@ -24,12 +48,15 @@
             <td>{{ demande.status }}</td>
             <td>{{ demande.dateCreation | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>{{ demande.dateDerniereModification | date:'dd/MM/yyyy HH:mm'}}</td>
-            <td>
-              <button (click)="toggleHistorique(demande.id)">
+            <td class="buttons">
+              <button (click)="toggleHistorique(demande.id)" matButton="tonal" >
                 {{ expandedId === demande.id ? '▲ Fermer' : '▼ Historique' }}
               </button>
-            
-                <button type="button" (click)="deleteDemande(demande.id)">Supprimer</button>
+                <button (click)="openEdit(demande)" matButton="tonal" id="modify-btn">Modifier</button>
+            </td>
+            <td>
+                <button type="button" (click)="deleteDemande(demande.id)" matFab id="delete-button"><mat-icon>delete</mat-icon></button>
+
             </td>
             </tr>
 
