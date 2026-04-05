@@ -1,14 +1,14 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { DemandesComponent } from './pages/demandes-component/demandes-component';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { DemandesComponent } from './demandes/demandes-component/demandes-component';
+import { HistoriqueComponent } from './historique/historique-component/historique-component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, DemandesComponent],
+  imports: [RouterLink, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('demandes_fontend');
 }

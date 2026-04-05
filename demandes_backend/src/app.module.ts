@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DemandesModule } from './demandes/demandes.module';
 import { DataSource } from 'typeorm';
 import { Demandes } from './demandes/entities/demande.entity';
+import { HistoriqueModule } from './historique/historique.module';
+import { Historique } from './historique/entities/historique.entity';
 
 @Module({
   imports: [
@@ -15,10 +17,11 @@ import { Demandes } from './demandes/entities/demande.entity';
       username: 'saad',
       password: 'S@ad123',
       database: 'testtechnique',
-      entities: [Demandes],
+      entities: [Demandes, Historique],
       synchronize: false,
     }),
     DemandesModule,
+    HistoriqueModule,
   ],
   controllers: [AppController],
   providers: [AppService],

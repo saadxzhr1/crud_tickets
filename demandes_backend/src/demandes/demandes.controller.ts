@@ -22,7 +22,7 @@ export class DemandesController {
 
   @Get()
   async findAll(): Promise<DemandesResponseDto[]> {
-    return this.demandesService.findAll();
+    return await this.demandesService.findAll();
   }
 
   @Get(':id')

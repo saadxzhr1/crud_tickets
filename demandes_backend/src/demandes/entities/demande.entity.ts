@@ -29,9 +29,3 @@ export class Demandes {
   @UpdateDateColumn()
   date_der_mod?: Date;
 }
-
-export enum DemandesStatus {
-  Brouillon = 'Brouillon',
-  Soumise = 'Soumise',
-  VALIDE = 'Validée',
-}
