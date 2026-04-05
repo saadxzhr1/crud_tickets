@@ -22,9 +22,9 @@ export class Historique {
   @Column()
   utilisateur!: string;
 
-  @Column()
-  ancienne_valeur!: string;
+  @Column({ type: 'text', nullable: true })
+  ancienne_valeur?: string;
 
-  @Column()
-  nouvelle_valeur!: string;
+  @Column({ type: 'text', nullable: true })
+  nouvelle_valeur?: string | null;
 }

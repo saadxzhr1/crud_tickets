@@ -83,13 +83,14 @@ export class DemandesComponent {
   };
 
 
-  // pop up
+  // pop up vide
   openCreate() {
     this.editingId = null;
     this.form = { titre: '', details: '', status: '' };
     this.showForm = true;
   }
 
+  // pop up avec champs remplis
   openEdit(demande: any) {
     this.editingId = demande.id;
     this.form = { titre: demande.titre, details: demande.details, status: demande.status };
@@ -100,15 +101,17 @@ export class DemandesComponent {
     this.showForm = false;
   }
 
+  // Confirmer action ajouter / modifier
   submit() {
   if (this.editingId) {
     this.demandesService.updateDemande(this.editingId, this.form).subscribe({
       next: (response) => { 
-        this.showForm = false; 
+        
         this.editingId = null;
         this.cdr.detectChanges();
-        alert(response.message); 
+        alert(response.message);
         this.loadDemandes();
+        this.showForm = false; 
       },
       error: (err) => console.error(err)
     });
@@ -124,12 +127,6 @@ export class DemandesComponent {
     });
   }
 }
-
-
-
-
-
-
 
 
   //Supprimer une demande / soft delete

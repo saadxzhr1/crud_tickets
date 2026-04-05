@@ -17,8 +17,8 @@ export class HistoriqueResponseDto {
   utilisateur!: string;
 
   @Expose()
-  ancienne_valeur!: string;
+  ancienne_valeur?: string | null;
 
   @Expose()
-  nouvelle_valeur!: string;
+  nouvelle_valeur?: string | null;
 }

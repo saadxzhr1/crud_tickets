@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Demandes } from './entities/demande.entity';
 import { DemandesResponseDto } from './dto/demandesResponse.dto';
+import { HistoriqueService } from 'src/historique/historique.service';
 
 @Injectable()
 export class DemandesService {
@@ -12,6 +13,7 @@ export class DemandesService {
   constructor(
     @InjectRepository(Demandes)
     private demandesRepository: Repository<Demandes>,
+    private historiqueService: HistoriqueService,
   ) {}
 
   // Ajouter demande
@@ -63,8 +65,15 @@ export class DemandesService {
     if (!demande) {
       throw new NotFoundException(`Demande ${id} non trouvée`);
     }
+    const ancienneValeur = `Titre: ${demande.titre} | Status: ${demande.status} | Details: ${demande.details}`;
     Object.assign(demande, updateDemandeDto);
     await this.demandesRepository.save(demande);
+    await this.historiqueService.auditDemandes(
+      id,
+      'MODIFICATION',
+      ancienneValeur,
+      `Titre: ${updateDemandeDto.titre ?? demande.titre} | Status: ${updateDemandeDto.status ?? demande.status} | Details: ${updateDemandeDto.details ?? demande.details}`,
+    );
     return { message: 'Demande ' + demande.titre + ' modifier avec success' };
   }
 
@@ -74,8 +83,16 @@ export class DemandesService {
     if (!demande) {
       throw new NotFoundException(`Demande ${id} non trouvée`);
     }
+    const ancienne_valeur = String('Supprimer: ' + demande.supprimer);
     demande.supprimer = true;
+
     await this.demandesRepository.save(demande);
+    await this.historiqueService.auditDemandes(
+      id,
+      'SUPPRESSION',
+      ancienne_valeur,
+      String('Supprimer: ' + true),
+    );
     return { message: 'Demande ' + demande.titre + ' supprimee avec success' };
   }
 }

@@ -14,7 +14,7 @@ td{
 .buttons {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 
 #filter-add{
@@ -113,4 +113,8 @@ button {
     width: 100%;
     justify-content: flex-end;
   }
+}
+
+input[name="details"] {
+  field-sizing: content;
 }

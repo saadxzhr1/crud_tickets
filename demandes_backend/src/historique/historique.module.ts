@@ -8,5 +8,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [TypeOrmModule.forFeature([Historique])],
   controllers: [HistoriqueController],
   providers: [HistoriqueService],
+  exports: [HistoriqueService],
 })
 export class HistoriqueModule {}
