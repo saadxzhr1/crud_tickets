@@ -16,16 +16,6 @@ export class DemandesService {
     private historiqueService: HistoriqueService,
   ) {}
 
-  // Ajouter demande
-  async create(createDemandeDto: CreateDemandeDto) {
-    const demande = this.demandesRepository.create({
-      ...createDemandeDto,
-      supprimer: false,
-    });
-    await this.demandesRepository.save(demande);
-    return { message: 'Demande ' + demande.titre + ' ajouter avec success' };
-  }
-
   // Charger tous les demandes
   async findAll(): Promise<DemandesResponseDto[]> {
     const demandes = await this.demandesRepository.find({
@@ -57,6 +47,22 @@ export class DemandesService {
       details: demande.details,
       status: demande.status,
     };
+  }
+
+  // Ajouter demande
+  async create(createDemandeDto: CreateDemandeDto) {
+    const demande = this.demandesRepository.create({
+      ...createDemandeDto,
+      supprimer: false,
+    });
+    await this.demandesRepository.save(demande);
+    await this.historiqueService.auditDemandes(
+      demande.id,
+      'CREATION',
+      '_',
+      `Titre: ${demande.titre} | Status: ${demande.status} | Details: ${demande.details}`,
+    );
+    return { message: 'Demande ' + demande.titre + ' ajouter avec success' };
   }
 
   // Modifier demande
