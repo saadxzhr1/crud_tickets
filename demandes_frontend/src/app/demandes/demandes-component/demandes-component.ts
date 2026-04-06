@@ -73,7 +73,7 @@ export class DemandesComponent {
     this.expandedId = this.expandedId === id ? null : id;
   }
 
-  // Creer ou modifier une demande
+  // Creer ou modifier une demande //
   showForm = false;
   editingId: number | null = null
   form = {
@@ -101,7 +101,7 @@ export class DemandesComponent {
     this.showForm = false;
   }
 
-  // Confirmer action ajouter / modifier
+  // Confirmer action ajouter / modifier //
   submit() {
   if (this.editingId) {
     this.demandesService.updateDemande(this.editingId, this.form).subscribe({
