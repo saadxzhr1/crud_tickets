@@ -33,11 +33,10 @@ Mini-application de gestion de demandes avec traçabilité des actions.
 ## Lancement du projet
 
 ### BackEnd
-cd demandes_backend
-npm install
-npm run start:dev
+cd demandes_backend // npm install // npm run start:dev
 
 ### FrontEnd
-cd demandes_frontend
-npm install
-npm start
+cd demandes_frontend // npm install // npm start
+
+## Démo vidéo
+Lien : https://drive.google.com/file/d/1VY_hkNrG8TBUkoAf6USqdYHG0yFeRdKg/view
