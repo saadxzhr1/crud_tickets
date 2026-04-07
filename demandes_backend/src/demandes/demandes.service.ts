@@ -9,6 +9,8 @@ import { HistoriqueService } from 'src/historique/historique.service';
 
 @Injectable()
 export class DemandesService {
+  utilisateur: string = 'testUser';
+
   // Injecter le repository
   constructor(
     @InjectRepository(Demandes)
@@ -58,6 +60,7 @@ export class DemandesService {
     await this.demandesRepository.save(demande);
     await this.historiqueService.auditDemandes(
       demande.id,
+      this.utilisateur,
       'CREATION',
       '_',
       `Titre: ${demande.titre} | Status: ${demande.status} | Details: ${demande.details}`,
@@ -76,6 +79,7 @@ export class DemandesService {
     await this.demandesRepository.save(demande);
     await this.historiqueService.auditDemandes(
       id,
+      this.utilisateur,
       'MODIFICATION',
       ancienneValeur,
       `Titre: ${updateDemandeDto.titre ?? demande.titre} | Status: ${updateDemandeDto.status ?? demande.status} | Details: ${updateDemandeDto.details ?? demande.details}`,
@@ -95,6 +99,7 @@ export class DemandesService {
     await this.demandesRepository.save(demande);
     await this.historiqueService.auditDemandes(
       id,
+      this.utilisateur,
       'SUPPRESSION',
       ancienne_valeur,
       String('Supprimer: ' + true),

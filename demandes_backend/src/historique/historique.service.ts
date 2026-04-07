@@ -53,13 +53,14 @@ export class HistoriqueService {
   // Enregistrer les actions sur demandes
   async auditDemandes(
     id_demande: number,
+    utilisateur: string,
     type_action: 'MODIFICATION' | 'SUPPRESSION' | 'CREATION',
     ancienne_valeur: string,
     nouvelle_valeur: string | null,
   ): Promise<void> {
     await this.historiqueRepository.save({
       id_demande,
-      utilisateur: 'testUser',
+      utilisateur,
       type_action,
       ancienne_valeur,
       nouvelle_valeur,
