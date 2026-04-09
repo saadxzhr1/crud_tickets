@@ -40,3 +40,6 @@ cd demandes_frontend // npm install // npm start
 
 ## Démo vidéo
 Lien : https://drive.google.com/file/d/1VY_hkNrG8TBUkoAf6USqdYHG0yFeRdKg/view
+
+## Version 2
+Version plus optimisée après le délai (en cours) => https://github.com/saadxzhr1/test_technique_app_v2
